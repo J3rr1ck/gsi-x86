@@ -32,12 +32,16 @@ def install_dependencies():
 
 def fetch_kernel():
     if not Path("android-kernel").exists():
-        run(f"mkdir android-kernel && cd android-kernel && repo init -u https://android.googlesource.com/kernel/manifest -b {KERNEL_BRANCH} && repo sync")
+        os.makedirs("android-kernel", exist_ok=True)
+        run(f"repo init -u https://android.googlesource.com/kernel/manifest -b {KERNEL_BRANCH}", cwd="android-kernel")
+        run("repo sync", cwd="android-kernel")
 
 def build_kernel():
     os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-21-openjdk"
     os.chdir("android-kernel")
-    run(f"bazel run //common-modules/virtual-device:virtual_device_x86_64_dist -- --destdir=out/dist")
+    if not Path("MODULE.bazel").exists() and not Path("WORKSPACE").exists():
+        raise FileNotFoundError("Bazel workspace not found. Ensure 'repo init' succeeded.")
+    run("bazel run //common-modules/virtual-device:virtual_device_x86_64_dist -- --destdir=out/dist")
     os.chdir("..")
 
 def copy_kernel():
