@@ -25,7 +25,7 @@ def ensure_dirs():
 
 def install_dependencies():
     deps = [
-        "base-devel", "git", "python", "jdk11-openjdk ", "clang", "bc", "libelf", "kmod",
+        "base-devel", "git", "python", "jdk21-openjdk ", "clang", "bc", "libelf", "kmod",
         "cpio", "perl", "xz", "wget", "repo", "bazel", "unzip"
     ]
     run(f"sudo pacman -Sy --needed {' '.join(deps)}")
@@ -35,6 +35,7 @@ def fetch_kernel():
         run(f"mkdir android-kernel && cd android-kernel && repo init -u https://android.googlesource.com/kernel/manifest -b {KERNEL_BRANCH} && repo sync")
 
 def build_kernel():
+    os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-21-openjdk"
     os.chdir("android-kernel")
     run(f"bazel run //common-modules/virtual-device:virtual_device_x86_64_dist -- --destdir=out/dist")
     os.chdir("..")
