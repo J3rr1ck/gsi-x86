@@ -25,7 +25,7 @@ def ensure_dirs():
 
 def install_dependencies():
     deps = [
-        "base-devel", "git", "python", "openjdk11", "clang", "bc", "libelf", "kmod",
+        "base-devel", "git", "python", "jdk11-openjdk ", "clang", "bc", "libelf", "kmod",
         "cpio", "perl", "xz", "wget", "repo", "bazel", "unzip"
     ]
     run(f"sudo pacman -Sy --needed {' '.join(deps)}")
