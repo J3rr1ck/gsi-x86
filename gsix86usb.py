@@ -74,11 +74,16 @@ def extract_gsi():
 
 def partition_usb():
     print("Partitioning USB device...\n⚠️ Make sure USB_DEVICE is correct: " + USB_DEVICE)
+
+    # Unmount any mounted partitions
+    run(f"sudo umount {USB_DEVICE}* || true")
+
     run(f"sudo parted -s {USB_DEVICE} mklabel gpt")
     run(f"sudo parted -s -a optimal {USB_DEVICE} mkpart primary fat32 1MiB 100%")
     run(f"sudo mkfs.vfat -F32 -n ANDROID_USB {USB_DEVICE}1")
     run(f"sudo mount {USB_DEVICE}1 {USB_MOUNT}")
     os.makedirs(f"{USB_BOOT_DIR}", exist_ok=True)
+
 
 def install_grub():
     run(f"sudo grub-install --target=i386-pc --boot-directory={USB_MOUNT}/boot {USB_DEVICE}")
