@@ -1,4 +1,5 @@
-# 🧰 Android GSI USB Builder (x86_64) This script automates the full process of building a mainline AOSP kernel, generating a bootable initramfs, and writing both (plus a GSI system image) to a USB device using GRUB — resulting in a bootable Android USB stick for x86_64 systems. 
+# 🧰 Android GSI USB Builder (x86_64) 
+### This script automates the full process of building a mainline AOSP kernel, generating a bootable initramfs, and writing both (plus a GSI system image) to a USB device using GRUB — resulting in a bootable Android USB stick for x86_64 systems. 
 --- 
 ## ✅ Features 
 - Fetches and builds the **AOSP mainline kernel** for x86_64 using Bazel. 
@@ -13,12 +14,16 @@
 - Internet connection (for kernel source + dependencies) 
 --- 
 ## 🛠️ Installation 
-```bash git clone https://github.com/yourname/android-usb-builder.git cd android-usb-builder chmod +x build_android_usb.py ``` 
+```bash git clone https://github.com/J3rr1ck/gsi-x86.git cd android-usb-builder chmod +x build_android_usb.py ``` 
 --- 
-## ⚙️ Configuration Edit these variables inside the script: ```python USB_DEVICE = "/dev/sdX" # Your USB device (e.g., /dev/sdb) GSI_ZIP = "aosp_gsi.zip" # Path to your downloaded GSI ZIP ``` 
+## ⚙️ Configuration Edit these variables inside the script: 
+```python USB_DEVICE = "/dev/sdX" # Your USB device (e.g., /dev/sdb) GSI_ZIP = "aosp_gsi.zip" # Path to your downloaded GSI ZIP ``` 
 > ⚠️ **Warning:** Double check that `USB_DEVICE` is correct. This script will reformat it. 
 --- 
-## 🚀 Usage ```bash sudo ./build_android_usb.py ``` This will: 1. Install required packages 2. Download and build the AOSP mainline kernel 3. Generate a simple Android-compatible initramfs 4. Partition and format your USB stick 5. Extract your GSI and copy it to the USB 6. Install GRUB and configure it to boot Android ---
+## 🚀 Usage 
+```bash sudo ./build_android_usb.py ``` 
+This will: 1. Install required packages 2. Download and build the AOSP mainline kernel 3. Generate a simple Android-compatible initramfs 4. Partition and format your USB stick 5. Extract your GSI and copy it to the USB 6. Install GRUB and configure it to boot Android 
+---
 ## 🧪 Tested With 
 - AOSP x86_64 GSIs from [ci.android.com](https://ci.android.com/) 
 - LineageOS-based GSIs (phhusson treble) 
